@@ -17,18 +17,18 @@ public class UserParamTest {
 
     @Test
     public void createdUserParamsTest() {
-        String email = "mamdia@gmail.com";
+        String expectedEmail = "mamdia@gmail.com";
 
         userParams = new UserBuilder()
                 .withFirstName("mamdia")
                 .withLastName("diallo")
-                .withEmail(email)
+                .withEmail(expectedEmail)
                 .withCreatedDateTime(LocalDateTime.now())
                 .withDateOfBirth(LocalDate.of(2000, 01, 14))
                 .withRole(UserRole.deSerializable("admin"))
                 .build();
 
-        assertEquals(email, userParams.getEmail());
+        assertEquals(expectedEmail, userParams.getEmail());
 
     }
 }
