@@ -3,6 +3,7 @@ package fr.sncf.ecommerce.users.domain.models.params;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.models.UserRole;
 import lombok.Getter;
 
@@ -14,6 +15,8 @@ public class CreateUserParams {
     private String lastName;
 
     private LocalDate dateOfirth;
+
+    private LocalDateTime createdDateTime;
 
     private String email;
 
@@ -78,6 +81,22 @@ public class CreateUserParams {
         public UserBuilder withRole(UserRole role) {
             this.role = role;
             return this;
+        }
+
+        public CreateUserParams build() {
+
+            CreateUserParams userParams = new CreateUserParams();
+
+            userParams.firstName = this.firstName;
+            userParams.lastName = this.lastName;
+            userParams.dateOfirth = this.dateOfBirth;
+            userParams.email = this.email;
+            userParams.password = this.password;
+            userParams.role = this.role;
+            userParams.createdDateTime = this.createdDateTime;
+
+            return userParams;
+
         }
     }
 }

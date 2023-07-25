@@ -19,7 +19,7 @@ public enum UserRole {
         return this.stringValue;
     }
 
-    public UserRole deSerializable(String userRole) {
+    public static UserRole deSerializable(String userRole) {
 
         return Arrays.stream(UserRole.values()).filter(role -> role.stringValue.equals(userRole))
                 .findAny()
