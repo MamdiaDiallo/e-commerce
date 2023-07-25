@@ -1,3 +1,4 @@
+package fr.sncf.ecommerce.users.domain.services;
 
 import fr.sncf.ecommerce.users.domain.models.params.CreateUserParams;
 import fr.sncf.ecommerce.users.domain.models.User;
