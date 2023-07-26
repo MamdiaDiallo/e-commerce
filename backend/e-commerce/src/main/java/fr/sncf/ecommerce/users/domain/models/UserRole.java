@@ -23,7 +23,7 @@ public enum UserRole {
 
         return Arrays.stream(UserRole.values()).filter(role -> role.stringValue.equals(userRole))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(String.format(" unknown user role ")));
+                .orElseThrow(() -> new IllegalArgumentException(String.format(" unknown user role \"%s\"")));
     }
 
 }

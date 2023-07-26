@@ -19,7 +19,7 @@ public class User {
 
     private String email;
 
-    private LocalDateTime createdDateTime;
+    private LocalDate createdDate;
 
     private UserRole role;
 
@@ -31,7 +31,7 @@ public class User {
         user.setLastName(userParams.getLastName());
         user.setDateOfBirth(userParams.getDateOfirth());
         user.setEmail(userParams.getEmail());
-        user.setCreatedDateTime(userParams.getCreatedDateTime());
+        user.setCreatedDate(userParams.getCreatedDate());
         user.setRole(userParams.getRole());
         user.setPassword(userParams.getPassword());
 

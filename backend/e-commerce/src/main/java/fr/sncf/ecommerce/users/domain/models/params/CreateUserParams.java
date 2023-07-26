@@ -16,7 +16,7 @@ public class CreateUserParams {
 
     private LocalDate dateOfirth;
 
-    private LocalDateTime createdDateTime;
+    private LocalDate createdDate;
 
     private String email;
 
@@ -33,7 +33,7 @@ public class CreateUserParams {
 
         private LocalDate dateOfBirth;
 
-        private LocalDateTime createdDateTime;
+        private LocalDate createdDate;
 
         private String email;
 
@@ -60,8 +60,8 @@ public class CreateUserParams {
         }
 
         /** Function to build date created user return this UserBuilder */
-        public UserBuilder withCreatedDateTime(LocalDateTime createdDateTime) {
-            this.createdDateTime = createdDateTime;
+        public UserBuilder withCreatedDate(LocalDate createdDate) {
+            this.createdDate = createdDate;
             return this;
         }
 
@@ -93,10 +93,11 @@ public class CreateUserParams {
             userParams.email = this.email;
             userParams.password = this.password;
             userParams.role = this.role;
-            userParams.createdDateTime = this.createdDateTime;
+            userParams.createdDate = this.createdDate;
 
             return userParams;
 
         }
+
     }
 }

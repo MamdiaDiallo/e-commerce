@@ -23,12 +23,12 @@ public class UserParamTest {
                 .withFirstName("mamdia")
                 .withLastName("diallo")
                 .withEmail(expectedEmail)
-                .withCreatedDateTime(LocalDateTime.now())
+                .withCreatedDate(LocalDate.of(2023, 07, 26))
                 .withDateOfBirth(LocalDate.of(2000, 01, 14))
                 .withRole(UserRole.deSerializable("admin"))
                 .build();
 
-        assertEquals(expectedEmail, userParams.getEmail());
+        assertEquals(LocalDate.now(), userParams.getCreatedDate());
 
     }
 }

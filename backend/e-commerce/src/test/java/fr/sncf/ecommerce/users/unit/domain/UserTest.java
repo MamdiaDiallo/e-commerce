@@ -6,6 +6,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.assertj.core.api.Assertions.assertThat; // main one
 
+import java.time.LocalDateTime;
+import java.time.Month;
+
 import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.models.params.CreateUserParams;
 import fr.sncf.ecommerce.users.domain.models.params.CreateUserParams.UserBuilder;
@@ -27,6 +30,7 @@ public class UserTest {
 
         String expectedFirstName = "mamdia";
         String expectedEmail = "mamdia@gmail.com";
+        LocalDateTime date = LocalDateTime.now();
 
         CreateUserParams createUserParams = new UserBuilder()
                 .withFirstName("mamdia")
@@ -38,5 +42,6 @@ public class UserTest {
 
         assertThat(email).isEqualTo(expectedEmail);
         assertThat(expectedFirstName).isEqualTo(firstName);
+
     }
 }

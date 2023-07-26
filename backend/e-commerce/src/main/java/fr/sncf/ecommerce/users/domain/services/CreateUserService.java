@@ -1,22 +1,27 @@
 package fr.sncf.ecommerce.users.domain.services;
 
 import fr.sncf.ecommerce.users.domain.models.params.CreateUserParams;
+import fr.sncf.ecommerce.users.domain.exceptions.ImailIspresentException;
 import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.ports.UsersRepository;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 public class CreateUserService {
 
-    private final UsersRepository userRepository;
+    private UsersRepository userRepository;
 
-    private final LocalDateTime dateTime;
+    public User Create(CreateUserParams userParam) throws ImailIspresentException {
 
-    User Create(CreateUserParams userParam) {
+        if (userRepository.findByEmail(userParam.getEmail()).isPresent()) {
+            throw new ImailIspresentException(userParam.getEmail());
+        } else {
+            User user = new User();
+            user.create(userParam);
 
-        if (this.userRepository.findByEmail(userParam.getEmail()).isPresent()) {
-
+            return user;
         }
-        return null;
     }
 
 }
