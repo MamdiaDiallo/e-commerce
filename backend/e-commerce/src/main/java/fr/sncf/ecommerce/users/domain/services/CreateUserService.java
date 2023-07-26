@@ -5,14 +5,11 @@ import fr.sncf.ecommerce.users.domain.exceptions.ImailIspresentException;
 import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.ports.UsersRepository;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-
 public class CreateUserService {
 
     private UsersRepository userRepository;
 
-    public User Create(CreateUserParams userParam) throws ImailIspresentException {
+    public User Create(CreateUserParams userParam) {
 
         if (userRepository.findByEmail(userParam.getEmail()).isPresent()) {
             throw new ImailIspresentException(userParam.getEmail());
