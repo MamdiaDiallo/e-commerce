@@ -1,6 +1,5 @@
 package fr.sncf.ecommerce.users.domain.ports;
 
-import java.util.List;
 import java.util.Optional;
 
 import fr.sncf.ecommerce.users.domain.models.User;
