@@ -1,10 +1,15 @@
 package fr.sncf.ecommerce.users.infrastructure.adapters.persistence;
 
+import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.jdbc.support.JdbcUtil;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import fr.sncf.ecommerce.common.infrastructure.persistence.JdbcUtils;
 import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.ports.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -56,10 +61,13 @@ public class JdbcUserRepository implements UsersRepository {
     /** implementations des methodes de l'interface User repository */
 
     private NamedParameterJdbcTemplate jdbcTemplate;
+    private JdbcUserMapper jdbcUserMapper;
 
     @Override
     public Optional<User> findById(int id) {
-
+        return JdbcUtils.findAsOptional(() -> jdbcTemplate.queryForObject(SELECT_USER_BY_ID,
+                Collections.singletonMap("id", id),
+                this.jdbcUserMapper));
     }
 
     @Override
@@ -76,8 +84,20 @@ public class JdbcUserRepository implements UsersRepository {
 
     @Override
     public User save(User user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        int vrais = this.jdbcTemplate.update(INSERT_USER,
+                Map.of(
+                        "id", user.getId(),
+                        "lastName", user.getLastName(),
+                        "firstName", user.getFirstName(),
+                        "createdDate", user.getCreatedDate(),
+                        "dateOfBirth", user.getDateOfBirth(),
+                        "role", user.getRole().serializable(),
+                        "password", user.getPassword(),
+                        "email", user.getEmail()));
+        if (vrais == 1) {
+            return user;
+        } else
+            return null;
     }
 
     @Override

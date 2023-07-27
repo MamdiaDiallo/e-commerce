@@ -1,7 +1,6 @@
 package fr.sncf.ecommerce.users.domain.models;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 public enum UserRole {
 
@@ -15,7 +14,7 @@ public enum UserRole {
 
     }
 
-    private String serializable() {
+    public String serializable() {
         return this.stringValue;
     }
 
