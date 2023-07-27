@@ -54,10 +54,12 @@ public class JdbcUserRepository implements UsersRepository {
             + "WHERE id = :id";
 
     /** implementations des methodes de l'interface User repository */
+
+    private NamedParameterJdbcTemplate jdbcTemplate;
+
     @Override
     public Optional<User> findById(int id) {
 
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 
     @Override
