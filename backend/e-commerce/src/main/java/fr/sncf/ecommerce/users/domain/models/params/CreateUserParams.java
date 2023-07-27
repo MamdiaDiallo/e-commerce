@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.models.UserRole;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter

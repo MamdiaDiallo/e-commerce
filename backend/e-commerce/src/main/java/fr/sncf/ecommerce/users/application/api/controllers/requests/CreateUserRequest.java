@@ -1,5 +1,7 @@
 package fr.sncf.ecommerce.users.application.api.controllers.requests;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -16,6 +18,12 @@ public class CreateUserRequest {
     private String lastName;
 
     private UserRole role;
+
+    private String password;
+
+    private LocalDate dateOfBirth;
+
+    private LocalDate createdDate;
 
     @JsonGetter("role")
     public String getSerializeRole() {
