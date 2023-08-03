@@ -2,7 +2,10 @@ package fr.sncf.ecommerce.users.domain.ports;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
 import fr.sncf.ecommerce.users.domain.models.User;
+import lombok.RequiredArgsConstructor;
 
 public interface UsersRepository {
 
@@ -38,7 +41,7 @@ public interface UsersRepository {
      * 
      * @return user {@link User} sauvegarder
      */
-    public User save(User user);
+    public void save(User user);
 
     /*
      * Supprimer un utilisateur s'il est dans la base de données

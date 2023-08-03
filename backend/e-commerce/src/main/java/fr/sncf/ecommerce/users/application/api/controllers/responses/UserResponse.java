@@ -5,9 +5,13 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 import fr.sncf.ecommerce.users.domain.models.UserRole;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Builder
+@Getter
 public class UserResponse {
 
     private int id;
@@ -22,11 +26,11 @@ public class UserResponse {
 
     private LocalDate createdDate;
 
+    @Getter(AccessLevel.NONE)
     private UserRole role;
 
-    @JsonGetter("role")
-    public String getSerializedRole() {
-        return this.role.toString();
+    public String getRole() {
+        return this.role.serializable();
     }
 
 }

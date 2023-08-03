@@ -27,12 +27,14 @@ public class User {
 
     public User create(CreateUserParams userParams) {
         User user = new User();
+        LocalDate date = LocalDate.now();
+
         user.setFirstName(userParams.getFirstName());
         user.setLastName(userParams.getLastName());
-        user.setDateOfBirth(userParams.getDateOfirth());
+        user.setDateOfBirth(userParams.getDateOfBirth());
         user.setEmail(userParams.getEmail());
-        user.setCreatedDate(userParams.getCreatedDate());
-        user.setRole(userParams.getRole());
+        user.setCreatedDate(date);
+        user.setRole(UserRole.deSerializable(userParams.getRole()));
         user.setPassword(userParams.getPassword());
 
         return user;

@@ -1,7 +1,5 @@
 package fr.sncf.ecommerce.users.domain.models;
 
-import java.util.Arrays;
-
 public enum UserRole {
 
     ADMINISTRATOR("admin"),
@@ -11,7 +9,6 @@ public enum UserRole {
 
     private UserRole(String stringValue) {
         this.stringValue = stringValue;
-
     }
 
     public String serializable() {
@@ -20,9 +17,11 @@ public enum UserRole {
 
     public static UserRole deSerializable(String userRole) {
 
-        return Arrays.stream(UserRole.values()).filter(role -> role.stringValue.equals(userRole))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException(String.format(" unknown user role \"%s\"")));
+        for (UserRole role : UserRole.values()) {
+            if (role.stringValue.equals(userRole)) {
+                return role;
+            }
+        }
+        throw new IllegalArgumentException(String.format(" unknown user role %s", userRole));
     }
-
 }

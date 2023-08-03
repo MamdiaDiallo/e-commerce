@@ -6,7 +6,7 @@ import fr.sncf.ecommerce.users.domain.models.User;
 
 @Component
 public class UserResponseMapper {
-    public UserResponse map(User user) {
+    public UserResponse mapResponse(User user) {
         return UserResponse.builder()
                 .createdDate(user.getCreatedDate())
                 .dateOfBirth(user.getDateOfBirth())
@@ -14,6 +14,7 @@ public class UserResponseMapper {
                 .lastName(user.getLastName())
                 .firstName(user.getFirstName())
                 .id(user.getId())
+                .role(user.getRole())
                 .build();
 
     }

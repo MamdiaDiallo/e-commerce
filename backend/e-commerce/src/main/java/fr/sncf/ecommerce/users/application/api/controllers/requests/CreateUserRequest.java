@@ -6,9 +6,15 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
 import fr.sncf.ecommerce.users.domain.models.UserRole;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Builder
+@Setter
 public class CreateUserRequest {
 
     private String email;
@@ -17,21 +23,21 @@ public class CreateUserRequest {
 
     private String lastName;
 
-    private UserRole role;
-
     private String password;
 
     private LocalDate dateOfBirth;
 
     private LocalDate createdDate;
 
-    @JsonGetter("role")
-    public String getSerializeRole() {
-        return this.getRole().toString();
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private UserRole role;
+
+    public String getRole() {
+        return this.role.serializable();
     }
 
-    @JsonSetter("role")
-    public void setSerializedRole(String role) {
-        this.role = UserRole.deSerializable(role);
+    public void setRole(String roleU) {
+        this.role = UserRole.deSerializable(roleU);
     }
 }

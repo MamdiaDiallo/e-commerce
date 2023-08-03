@@ -1,24 +1,34 @@
 package fr.sncf.ecommerce.users.domain.services;
 
 import fr.sncf.ecommerce.users.domain.models.params.CreateUserParams;
-import fr.sncf.ecommerce.users.domain.exceptions.ImailIspresentException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.ports.UsersRepository;
+import lombok.RequiredArgsConstructor;
 
+@Service
+@RequiredArgsConstructor
 public class CreateUserService {
 
-    private UsersRepository userRepository;
+    @Autowired
+    private final UsersRepository userRepository;
 
+    /**
+     * cree un user
+     * 
+     * @param userParam
+     * @return un User
+     */
     public User Create(CreateUserParams userParam) {
 
-        if (userRepository.findByEmail(userParam.getEmail()).isPresent()) {
-            throw new ImailIspresentException(userParam.getEmail());
-        } else {
-            User user = new User();
-            user.create(userParam);
+        User user = new User();
+        user.create(userParam);
+        this.userRepository.save(user);
+        return user;
 
-            return user;
-        }
     }
 
 }
