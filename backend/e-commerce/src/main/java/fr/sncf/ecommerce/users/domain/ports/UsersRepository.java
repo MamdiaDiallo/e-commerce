@@ -1,5 +1,6 @@
 package fr.sncf.ecommerce.users.domain.ports;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
@@ -32,7 +33,7 @@ public interface UsersRepository {
      * 
      * @return users {@link user} all users
      */
-    public Iterable<User> getUsers();
+    public List<User> getUsers();
 
     /*
      * Savaugarder l'était de l'utilisateur en lui attribuant un identifiant

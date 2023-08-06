@@ -2,10 +2,10 @@ package fr.sncf.ecommerce.users.domain.models;
 
 public enum UserRole {
 
-    ADMINISTRATOR("admin"),
+    ADMIN("admin"),
     USER("user");
 
-    private String stringValue;
+    private final String stringValue;
 
     private UserRole(String stringValue) {
         this.stringValue = stringValue;
@@ -22,6 +22,7 @@ public enum UserRole {
                 return role;
             }
         }
-        throw new IllegalArgumentException(String.format(" unknown user role %s", userRole));
+        throw new IllegalArgumentException(String.format(" unknown user role \"%s\"", userRole));
     }
+
 }

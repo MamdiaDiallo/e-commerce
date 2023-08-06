@@ -3,10 +3,16 @@ package fr.sncf.ecommerce.users.domain.models;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import fr.sncf.ecommerce.users.domain.models.params.CreateUserParams;
-import lombok.Data;
+import org.springframework.data.annotation.Id;
 
-@Data
+import fr.sncf.ecommerce.users.domain.models.params.CreateUserParams;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class User {
 
     private int id;
@@ -15,26 +21,20 @@ public class User {
 
     private String lastName;
 
-    private LocalDate dateOfBirth;
-
     private String email;
-
-    private LocalDate createdDate;
-
-    private UserRole role;
 
     private String password;
 
-    public User create(CreateUserParams userParams) {
-        User user = new User();
-        LocalDate date = LocalDate.now();
+    private UserRole role;
 
+    public static User create(CreateUserParams userParams) {
+        User user = new User();
+
+        user.setRole(UserRole.deSerializable(userParams.getRole()));
+        user.setId(userParams.getId());
         user.setFirstName(userParams.getFirstName());
         user.setLastName(userParams.getLastName());
-        user.setDateOfBirth(userParams.getDateOfBirth());
         user.setEmail(userParams.getEmail());
-        user.setCreatedDate(date);
-        user.setRole(UserRole.deSerializable(userParams.getRole()));
         user.setPassword(userParams.getPassword());
 
         return user;

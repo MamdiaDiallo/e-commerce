@@ -8,19 +8,17 @@ import fr.sncf.ecommerce.users.domain.models.UserRole;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.ToString;
+import lombok.Setter;
 
 @Getter
 @Builder
 public class CreateUserParams {
 
+    private int id;
+
     private String firstName;
 
     private String lastName;
-
-    private LocalDate dateOfBirth;
-
-    private LocalDate createdDate;
 
     private String email;
 
@@ -32,5 +30,4 @@ public class CreateUserParams {
     public String getRole() {
         return this.role.serializable();
     }
-
 }

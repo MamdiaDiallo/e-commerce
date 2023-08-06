@@ -13,9 +13,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Builder
 @Setter
 public class CreateUserRequest {
+
+    private int id;
 
     private String email;
 
@@ -25,10 +26,6 @@ public class CreateUserRequest {
 
     private String password;
 
-    private LocalDate dateOfBirth;
-
-    private LocalDate createdDate;
-
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     private UserRole role;
@@ -37,7 +34,8 @@ public class CreateUserRequest {
         return this.role.serializable();
     }
 
-    public void setRole(String roleU) {
-        this.role = UserRole.deSerializable(roleU);
+    public void setRole(String userRole) {
+        this.role = UserRole.deSerializable(userRole);
     }
+
 }

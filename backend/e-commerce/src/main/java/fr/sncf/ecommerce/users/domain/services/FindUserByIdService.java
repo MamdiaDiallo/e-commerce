@@ -8,16 +8,15 @@ import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.ports.UsersRepository;
 
 @Service
-public class FindUserByEmailService {
+public class FindUserByIdService {
 
     @Autowired
-    public UsersRepository usersRepository;
+    private UsersRepository usersRepository;
 
-    public User findUserByEmail(String email) {
-        if (this.usersRepository.findByEmail(email).isPresent())
-            return this.usersRepository.findByEmail(email).orElseThrow(() -> new EmailIsNotPresent(email));
+    public User findUserById(int id) {
+        if (this.usersRepository.findById(id).isPresent())
+            return this.usersRepository.findById(id).orElseThrow(() -> new EmailIsNotPresent("unknow user id"));
         else
-            throw new EmailIsNotPresent(email);
+            throw new EmailIsNotPresent("unknow user id ");
     }
-
 }
