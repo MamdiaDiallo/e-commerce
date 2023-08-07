@@ -51,6 +51,6 @@ public interface UsersRepository {
      * 
      * @return
      */
-    public void delete(User user);
+    public void delete(int id);
 
 }

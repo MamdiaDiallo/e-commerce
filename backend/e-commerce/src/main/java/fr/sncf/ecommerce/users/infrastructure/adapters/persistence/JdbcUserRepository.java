@@ -79,7 +79,11 @@ public class JdbcUserRepository implements UsersRepository {
         public void save(User user) {
                 // SqlParameterSource parametre = new BeanPropertySqlParameterSource(user);
 
-                int vrais = this.jdbcTemplate.update(SELECT_ALL_USRS,
+                int vrais = this.jdbcTemplate.update("INSERT INTO " +
+                                "users " +
+                                "(id,last_name , first_name, password, email, role) " +
+                                "VALUES " +
+                                "(:id,:lastName,:firstName, :password, :email, :role)",
                                 Map.of("id", user.getId(),
                                                 "lastName", user.getLastName(),
                                                 "firstName", user.getFirstName(),
@@ -92,9 +96,8 @@ public class JdbcUserRepository implements UsersRepository {
         }
 
         @Override
-        public void delete(User user) {
-                this.jdbcTemplate.update(DELETE +
-                                " u.id = :id", Collections.singletonMap("id", user.getId()));
+        public void delete(int id) {
+                this.jdbcTemplate.update("DELETE FROM users WHERE id = :id", Collections.singletonMap("id", id));
         }
 
 }

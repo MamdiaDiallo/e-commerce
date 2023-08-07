@@ -1,12 +1,11 @@
 package fr.sncf.ecommerce.users.application.api.controllers;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +19,7 @@ import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.models.UserRole;
 import fr.sncf.ecommerce.users.domain.models.params.CreateUserParams;
 import fr.sncf.ecommerce.users.domain.services.CreateUserService;
+import fr.sncf.ecommerce.users.domain.services.DeleteUserService;
 import fr.sncf.ecommerce.users.domain.services.FindByIdUserService;
 import fr.sncf.ecommerce.users.domain.services.FindUserByEmailService;
 import fr.sncf.ecommerce.users.domain.services.FindUserByIdService;
@@ -41,6 +41,9 @@ public class UsersController {
 
         @Autowired
         private FindUserByIdService findUserByIdService;
+
+        @Autowired
+        private DeleteUserService deleteUserService;
 
         @PostMapping("create")
         public ResponseEntity<UserResponse> createdUser(@RequestBody CreateUserRequest createUserRequest) {
@@ -84,6 +87,13 @@ public class UsersController {
 
         }
 
+        /*
+         * read user by id
+         * 
+         * @param int {link}
+         * 
+         * @return UserResponse;
+         */
         @GetMapping("read-id/{id}")
         public ResponseEntity<UserResponse> finById(@PathVariable("id") int id) {
                 User user = this.findUserByIdService.findUserById(id);
@@ -91,5 +101,10 @@ public class UsersController {
                                 .status(200)
                                 .header("id", "find user by id")
                                 .body(this.userResponseMapper.mapResponse(user));
+        }
+
+        @DeleteMapping("delete-user-by-id/{id}")
+        public void deleteUser(@PathVariable("id") int id) {
+                this.deleteUserService.deleteUser(id);
         }
 }

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 
 import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.ports.UsersRepository;
-import fr.sncf.ecommerce.users.infrastructure.adapters.persistence.JdbcUserRepository;
-import lombok.RequiredArgsConstructor;
 
 @Service
 public class CreateUserService {

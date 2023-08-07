@@ -4,9 +4,7 @@ import java.time.LocalDate;
 
 import fr.sncf.ecommerce.users.domain.models.UserRole;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 public class Params {
 
