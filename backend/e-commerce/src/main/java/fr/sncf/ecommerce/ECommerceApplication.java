@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 import fr.sncf.ecommerce.users.domain.models.UserRole;
 
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@SpringBootApplication
 public class ECommerceApplication {
 
 	public static void main(String[] args) {

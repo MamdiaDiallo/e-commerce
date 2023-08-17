@@ -1,8 +1,5 @@
 package fr.sncf.ecommerce.users.unit.domain.params;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.assertj.core.api.Assertions.assertThat;

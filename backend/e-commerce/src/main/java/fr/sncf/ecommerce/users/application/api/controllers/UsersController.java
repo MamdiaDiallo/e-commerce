@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,6 +47,9 @@ public class UsersController {
         @Autowired
         private DeleteUserService deleteUserService;
 
+        @Autowired
+        private PasswordEncoder passwordEncoder;
+
         @PostMapping("create")
         public ResponseEntity<UserResponse> createdUser(@RequestBody CreateUserRequest createUserRequest) {
 
@@ -52,7 +57,7 @@ public class UsersController {
                                 .firstName(createUserRequest.getFirstName())
                                 .lastName(createUserRequest.getLastName())
                                 .email(createUserRequest.getEmail())
-                                .password(createUserRequest.getPassword())
+                                .password(this.passwordEncoder.encode(createUserRequest.getPassword()))
                                 .role(UserRole.deSerializable(createUserRequest.getRole()))
                                 .build());
                 return ResponseEntity.status(200)
@@ -87,6 +92,11 @@ public class UsersController {
 
         }
 
+        @GetMapping("/")
+        public String get() {
+                return "merci bienvenue";
+        }
+
         /*
          * read user by id
          * 
@@ -95,6 +105,7 @@ public class UsersController {
          * @return UserResponse;
          */
         @GetMapping("read-id/{id}")
+        @PreAuthorize("admin")
         public ResponseEntity<UserResponse> finById(@PathVariable("id") int id) {
                 User user = this.findUserByIdService.findUserById(id);
                 return ResponseEntity

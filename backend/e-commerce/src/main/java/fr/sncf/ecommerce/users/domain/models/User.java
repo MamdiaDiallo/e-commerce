@@ -3,7 +3,9 @@ package fr.sncf.ecommerce.users.domain.models;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import fr.sncf.ecommerce.users.domain.models.params.CreateUserParams;
 import lombok.AccessLevel;
@@ -27,6 +29,9 @@ public class User {
 
     private UserRole role;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public static User create(CreateUserParams userParams) {
         User user = new User();
 
@@ -38,6 +43,10 @@ public class User {
         user.setPassword(userParams.getPassword());
 
         return user;
+    }
+
+    public static Object withDefaultPasswordEncoder() {
+        return null;
     }
 
 }

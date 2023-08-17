@@ -1,4 +1,4 @@
-package fr.sncf.ecommerce.users.unit.services;
+package fr.sncf.ecommerce.users.integration.services;
 
 public class DeleteUserService {
 

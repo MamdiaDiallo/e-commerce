@@ -77,7 +77,6 @@ public class JdbcUserRepository implements UsersRepository {
 
         @Override
         public void save(User user) {
-                // SqlParameterSource parametre = new BeanPropertySqlParameterSource(user);
 
                 int vrais = this.jdbcTemplate.update("INSERT INTO " +
                                 "users " +
