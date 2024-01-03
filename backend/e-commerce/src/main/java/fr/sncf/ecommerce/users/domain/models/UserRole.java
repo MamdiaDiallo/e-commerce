@@ -1,28 +1,28 @@
 package fr.sncf.ecommerce.users.domain.models;
 
+import java.util.Arrays;
+
 public enum UserRole {
 
-    ADMIN("admin"),
-    USER("user");
+    USER("user"),
+    ADMINISTRATOR("administrator");
 
     private final String stringValue;
+
+    private static final long serialVersionUID = 0L;
+
+    public String serialize() {
+        return this.stringValue;
+    }
 
     private UserRole(String stringValue) {
         this.stringValue = stringValue;
     }
 
-    public String serializable() {
-        return this.stringValue;
+    public static UserRole deserialize(String repr) {
+        return Arrays.stream(UserRole.values())
+                .filter(role -> role.stringValue.equals(repr))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("invalid value \"%s\"", repr)));
     }
-
-    public static UserRole deSerializable(String userRole) {
-
-        for (UserRole role : UserRole.values()) {
-            if (role.stringValue.equals(userRole)) {
-                return role;
-            }
-        }
-        throw new IllegalArgumentException(String.format(" unknown user role \"%s\"", userRole));
-    }
-
 }

@@ -1,11 +1,8 @@
-package fr.sncf.ecommerce.users.application.api.configurations;
+package fr.sncf.ecommerce.common.configurations;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,34 +10,34 @@ import org.springframework.stereotype.Component;
 
 import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.ports.UsersRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class CustomeUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final UsersRepository usersRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return this.usersRepository.findByEmail(username)
-                .map(userDataDetail -> new CustomeUserDetails(userDataDetail))
-                .orElseThrow(() -> new UsernameNotFoundException(
-                        String.format("username with emal %s was not found", username)));
-    }
 
-    public Class<CustomeUserDetails> extracted() {
-        return CustomeUserDetails.class;
+        return this.usersRepository.findByEmail(username)
+                .map(CustomUserDetails::new)
+                .orElseThrow(() -> new UsernameNotFoundException(
+                        String.format("username with email %s not found", username)));
+
     }
 
     @RequiredArgsConstructor
-    public static class CustomeUserDetails implements UserDetails {
+    public static class CustomUserDetails implements UserDetails {
 
+        @Getter
         private final User user;
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return List.of(new SimpleGrantedAuthority(user.getRole().serializable()));
+            return Collections.emptyList();
         }
 
         @Override
@@ -71,7 +68,8 @@ public class CustomeUserDetailsService implements UserDetailsService {
         @Override
         public boolean isEnabled() {
             return true;
-        }
 
+        }
     }
+
 }

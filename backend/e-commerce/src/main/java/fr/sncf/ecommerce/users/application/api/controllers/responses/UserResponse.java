@@ -1,8 +1,6 @@
 package fr.sncf.ecommerce.users.application.api.controllers.responses;
 
-import java.time.LocalDate;
-
-import com.fasterxml.jackson.annotation.JsonGetter;
+import java.util.UUID;
 
 import fr.sncf.ecommerce.users.domain.models.UserRole;
 import lombok.AccessLevel;
@@ -13,19 +11,19 @@ import lombok.Getter;
 @Getter
 public class UserResponse {
 
-    private int id;
+    private final UUID id;
 
-    private String firstName;
+    private final String firstname;
 
-    private String lastName;
+    private final String lastname;
 
-    private String email;
+    private final String email;
 
     @Getter(AccessLevel.NONE)
-    private UserRole role;
+    private final UserRole role;
 
     public String getRole() {
-        return this.role.serializable();
+        return this.role.serialize();
     }
 
 }

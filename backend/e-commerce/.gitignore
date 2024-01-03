@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### app-properties ##
+/src/main/java/fr/sncf/ecommerce/resources/application.properties

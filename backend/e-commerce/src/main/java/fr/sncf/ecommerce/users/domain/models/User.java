@@ -1,52 +1,41 @@
 package fr.sncf.ecommerce.users.domain.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import fr.sncf.ecommerce.users.domain.models.params.CreateUserParams;
+import io.micrometer.common.lang.NonNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Builder
 @Getter
-@Setter
-public class User {
+public class User implements Serializable {
 
-    private int id;
+    @Setter
+    private UUID id;
 
-    private String firstName;
+    @NonNull
+    private final String firstname;
 
-    private String lastName;
+    @NonNull
+    private final String lastname;
 
-    private String email;
+    @NonNull
+    private final String email;
 
-    private String password;
+    @NonNull
+    private final UserRole role;
 
-    private UserRole role;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    public static User create(CreateUserParams userParams) {
-        User user = new User();
-
-        user.setRole(UserRole.deSerializable(userParams.getRole()));
-        user.setId(userParams.getId());
-        user.setFirstName(userParams.getFirstName());
-        user.setLastName(userParams.getLastName());
-        user.setEmail(userParams.getEmail());
-        user.setPassword(userParams.getPassword());
-
-        return user;
-    }
-
-    public static Object withDefaultPasswordEncoder() {
-        return null;
-    }
-
+    @NonNull
+    private final String password;
 }

@@ -6,14 +6,13 @@ import fr.sncf.ecommerce.users.domain.models.User;
 @Component
 public class UserResponseMapper {
 
-    public UserResponse mapResponse(User user) {
+    public UserResponse map(User user) {
         return UserResponse.builder()
                 .id(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
+                .firstname(user.getFirstname())
+                .lastname(user.getLastname())
                 .email(user.getEmail())
                 .role(user.getRole())
                 .build();
-
     }
 }

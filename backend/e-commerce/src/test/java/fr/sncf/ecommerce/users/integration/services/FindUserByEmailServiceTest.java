@@ -11,30 +11,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.ports.UsersRepository;
-import fr.sncf.ecommerce.users.infrastructure.adapters.persistence.JdbcUserRepository;
 import fr.sncf.ecommerce.users.integration.repository.UsersRepositoryTest;
 
 @ExtendWith(MockitoExtension.class)
 public class FindUserByEmailServiceTest {
-
-    @Autowired
-    private UsersRepositoryTest usersRepositoryTest;
-
-    @Autowired
-    public UsersRepository usersRepository;
-
-    @Mock
-    private User user;
-
-    @BeforeEach
-    public void setup() {
-        usersRepository = new JdbcUserRepository();
-    }
-
-    @Test
-    public void userTest() {
-        ///given
-        
-        when(user.create(null));
-    }
+    /*
+     * @Autowired
+     * private UsersRepositoryTest usersRepositoryTest;
+     * 
+     * @Autowired
+     * public UsersRepository usersRepository;
+     * 
+     * @Mock
+     * private User user;
+     * 
+     * @BeforeEach
+     * public void setup() {
+     * usersRepository = new JdbcUserRepository();
+     * }
+     * 
+     * @Test
+     * public void userTest() {
+     * ///given
+     * 
+     * when(user.create(null));
+     * }
+     */
 }

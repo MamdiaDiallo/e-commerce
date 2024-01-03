@@ -1,17 +1,22 @@
 package fr.sncf.ecommerce.users.application.api.controllers;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.sncf.ecommerce.users.application.api.controllers.requests.CreateUserRequest;
@@ -24,13 +29,18 @@ import fr.sncf.ecommerce.users.domain.services.CreateUserService;
 import fr.sncf.ecommerce.users.domain.services.DeleteUserService;
 import fr.sncf.ecommerce.users.domain.services.FindByIdUserService;
 import fr.sncf.ecommerce.users.domain.services.FindUserByEmailService;
-import fr.sncf.ecommerce.users.domain.services.FindUserByIdService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import fr.sncf.ecommerce.users.domain.services.FindAllUserService;
 
 @RestController
+@RequestMapping(path = "/api/users")
+@RequiredArgsConstructor
+@CrossOrigin("http://localhost:4200")
 public class UsersController {
 
         @Autowired
-        private CreateUserService createUserService;
+        private CreateUserService createUserUseCase;
 
         @Autowired
         private UserResponseMapper userResponseMapper;
@@ -42,7 +52,7 @@ public class UsersController {
         private FindUserByEmailService findUserByEmailService;
 
         @Autowired
-        private FindUserByIdService findUserByIdService;
+        private FindAllUserService findUserByIdService;
 
         @Autowired
         private DeleteUserService deleteUserService;
@@ -50,72 +60,38 @@ public class UsersController {
         @Autowired
         private PasswordEncoder passwordEncoder;
 
-        @PostMapping("create")
-        public ResponseEntity<UserResponse> createdUser(@RequestBody CreateUserRequest createUserRequest) {
+        @PostMapping
+        @ResponseStatus(HttpStatus.CREATED)
+        public UserResponse createUser(@Valid @RequestBody CreateUserRequest request) {
 
-                User user = createUserService.Create(CreateUserParams.builder()
-                                .firstName(createUserRequest.getFirstName())
-                                .lastName(createUserRequest.getLastName())
-                                .email(createUserRequest.getEmail())
-                                .password(this.passwordEncoder.encode(createUserRequest.getPassword()))
-                                .role(UserRole.deSerializable(createUserRequest.getRole()))
-                                .build());
-                return ResponseEntity.status(200)
-                                .header("e-commerce", "user")
-                                .body(this.userResponseMapper.mapResponse(user));
-
+                final var user = this.createUserUseCase.create(
+                                CreateUserParams.builder()
+                                                .firstname(request.getFirstname())
+                                                .lastname(request.getLastname())
+                                                .email(request.getEmail())
+                                                .password(request.getPassword())
+                                                .role(request.getRole())
+                                                .build());
+                return this.userResponseMapper.map(user);
         }
 
-        @GetMapping("users")
-        public List<UserResponse> gest() {
+        @GetMapping
+        public List<UserResponse> findAll() {
 
-                return this.findByIdUserService.getAll()
+                return this.findUserByIdService.read()
                                 .stream()
-                                .map(user -> UserResponse.builder()
-                                                .role(user.getRole())
-                                                .id(user.getId())
-                                                .firstName(user.getFirstName())
-                                                .lastName(user.getLastName())
-                                                .email(user.getEmail())
-                                                .build())
-                                .collect(Collectors.toList());
-
+                                .map(this.userResponseMapper::map)
+                                .toList();
         }
 
-        @GetMapping("read-email/{email}")
-        public ResponseEntity<UserResponse> findByEmail(@PathVariable("email") String email) {
-                User user = this.findUserByEmailService.findUserByEmail(email);
-                return ResponseEntity
-                                .status(200)
-                                .header("email", "email-user")
-                                .body(this.userResponseMapper.mapResponse(user));
-
+        @GetMapping("{id}")
+        public UserResponse findById(@PathVariable("id") UUID id) {
+                return this.userResponseMapper.map(this.findByIdUserService.read(id));
         }
 
-        @GetMapping("/")
-        public String get() {
-                return "merci bienvenue";
-        }
-
-        /*
-         * read user by id
-         * 
-         * @param int {link}
-         * 
-         * @return UserResponse;
-         */
-        @GetMapping("read-id/{id}")
-        @PreAuthorize("admin")
-        public ResponseEntity<UserResponse> finById(@PathVariable("id") int id) {
-                User user = this.findUserByIdService.findUserById(id);
-                return ResponseEntity
-                                .status(200)
-                                .header("id", "find user by id")
-                                .body(this.userResponseMapper.mapResponse(user));
-        }
-
-        @DeleteMapping("delete-user-by-id/{id}")
-        public void deleteUser(@PathVariable("id") int id) {
-                this.deleteUserService.deleteUser(id);
+        @DeleteMapping("{id}")
+        @ResponseStatus(HttpStatus.NO_CONTENT)
+        public void deleteById(@PathVariable("id") UUID id) {
+                this.deleteUserService.delete(id);
         }
 }

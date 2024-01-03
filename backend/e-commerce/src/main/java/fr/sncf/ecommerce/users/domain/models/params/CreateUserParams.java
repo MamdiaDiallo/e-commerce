@@ -8,26 +8,18 @@ import fr.sncf.ecommerce.users.domain.models.UserRole;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Builder
 public class CreateUserParams {
 
-    private int id;
+    private final String firstname;
 
-    private String firstName;
+    private final String lastname;
 
-    private String lastName;
+    private final String email;
 
-    private String email;
+    private final String password;
 
-    private String password;
-
-    @Getter(AccessLevel.NONE)
-    private UserRole role;
-
-    public String getRole() {
-        return this.role.serializable();
-    }
+    private final UserRole role;
 }
