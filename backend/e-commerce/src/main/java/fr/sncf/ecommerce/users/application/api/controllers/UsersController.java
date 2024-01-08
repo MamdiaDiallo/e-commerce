@@ -2,13 +2,9 @@ package fr.sncf.ecommerce.users.application.api.controllers;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.sncf.ecommerce.users.application.api.controllers.requests.CreateUserRequest;
 import fr.sncf.ecommerce.users.application.api.controllers.responses.UserResponse;
 import fr.sncf.ecommerce.users.application.api.controllers.responses.UserResponseMapper;
-import fr.sncf.ecommerce.users.domain.models.User;
-import fr.sncf.ecommerce.users.domain.models.UserRole;
 import fr.sncf.ecommerce.users.domain.models.params.CreateUserParams;
 import fr.sncf.ecommerce.users.domain.services.CreateUserService;
 import fr.sncf.ecommerce.users.domain.services.DeleteUserService;
 import fr.sncf.ecommerce.users.domain.services.FindByIdUserService;
-import fr.sncf.ecommerce.users.domain.services.FindUserByEmailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import fr.sncf.ecommerce.users.domain.services.FindAllUserService;
@@ -49,17 +42,14 @@ public class UsersController {
         private FindByIdUserService findByIdUserService;
 
         @Autowired
-        private FindUserByEmailService findUserByEmailService;
-
-        @Autowired
         private FindAllUserService findUserByIdService;
 
         @Autowired
         private DeleteUserService deleteUserService;
 
-        @Autowired
-        private PasswordEncoder passwordEncoder;
-
+        /*
+         * create user
+         */
         @PostMapping
         @ResponseStatus(HttpStatus.CREATED)
         public UserResponse createUser(@Valid @RequestBody CreateUserRequest request) {

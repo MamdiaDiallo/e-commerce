@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
 import fr.sncf.ecommerce.common.infrastructure.persistence.JdbcUtils;
@@ -21,6 +22,7 @@ public class UsersRepository {
 
     private final UsersRowMapper usersRowMapper;
 
+    @PreAuthorize("@usersGuard.canCreate(#user, principal)")
     public void create(User user) {
         final UUID id = UUID.randomUUID();
         final var insertQuery = "INSERT INTO users " +
