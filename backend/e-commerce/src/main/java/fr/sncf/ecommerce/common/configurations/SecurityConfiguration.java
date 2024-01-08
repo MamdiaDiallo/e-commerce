@@ -24,53 +24,56 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final CustomUserDetailsService customUserDetailsService;
+        private final CustomUserDetailsService customUserDetailsService;
 
-    /**
-     * 
-     * @param http
-     * @return
-     * @throws Exception
-     */
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        /**
+         * 
+         * @param http
+         * @return
+         * @throws Exception
+         */
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        return http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
-        .cors(cors -> cors.configurationSource(corsConfigurationSource()))        
-        .csrf(csrf -> csrf.disable())
-                .formLogin(formLogin -> formLogin.disable())
-                .httpBasic(Customizer.withDefaults())
-                .userDetailsService(this.customUserDetailsService)
-                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(HttpMethod.GET, "/api/users").authenticated())
-                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers("/auth/state").authenticated())
-                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests.requestMatchers(HttpMethod.GET,
-                        "/api/users/{id}").authenticated())
-                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(HttpMethod.POST, "/api/users").authenticated())
-                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests.anyRequest().denyAll())
+                return http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                                .csrf(csrf -> csrf.disable())
+                                .formLogin(formLogin -> formLogin.disable())
+                                .httpBasic(Customizer.withDefaults())
+                                .userDetailsService(this.customUserDetailsService)
+                                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+                                                .requestMatchers(HttpMethod.GET, "/api/users").authenticated())
+                                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+                                                .requestMatchers("/auth/state").authenticated())
+                                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+                                                .requestMatchers(HttpMethod.GET,
+                                                                "/api/users/{id}")
+                                                .hasAnyRole("user"))
+                                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+                                                .requestMatchers(HttpMethod.POST, "/api/users").authenticated())
+                                .authorizeHttpRequests(
+                                                (authorizeHttpRequests) -> authorizeHttpRequests.anyRequest().denyAll())
 
-                .build();
-    }
+                                .build();
+        }
 
-    
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
-        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
-        configuration.setAllowCredentials(true);
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+                configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
+                configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+                configuration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration);
+                return source;
+        }
+
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
 }

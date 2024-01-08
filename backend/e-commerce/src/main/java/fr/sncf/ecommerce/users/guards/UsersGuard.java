@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import fr.sncf.ecommerce.common.configurations.CustomUserDetailsService.CustomUserDetails;
 import fr.sncf.ecommerce.users.domain.models.User;
 import fr.sncf.ecommerce.users.domain.models.UserRole;
-import lombok.var;
 
 @Component("usersGuard")
 public class UsersGuard {

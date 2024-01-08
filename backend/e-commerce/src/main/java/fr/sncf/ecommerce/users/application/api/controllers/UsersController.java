@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +52,7 @@ public class UsersController {
          * create user
          */
         @PostMapping
-        @ResponseStatus(HttpStatus.CREATED)
+       // @ResponseStatus(HttpStatus.CREATED)
         public UserResponse createUser(@Valid @RequestBody CreateUserRequest request) {
 
                 final var user = this.createUserUseCase.create(
@@ -75,6 +76,7 @@ public class UsersController {
         }
 
         @GetMapping("{id}")
+        //@PreAuthorize("hasRole('user')")
         public UserResponse findById(@PathVariable("id") UUID id) {
                 return this.userResponseMapper.map(this.findByIdUserService.read(id));
         }

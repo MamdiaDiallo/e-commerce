@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  app:
+    container_name: ecommerce-dev
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: ecommerce-db
+      POSTGRES_HOSTNAME: postgresdb
+    volumes:
+      - ../..:/workspaces:cached      
+    network_mode: service:db
+    command: sleep infinity
+
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: ecommerce-db
+
+volumes:
+  postgres-data:

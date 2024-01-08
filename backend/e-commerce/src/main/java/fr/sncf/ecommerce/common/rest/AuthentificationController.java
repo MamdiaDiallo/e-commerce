@@ -12,7 +12,6 @@ import fr.sncf.ecommerce.common.configurations.CustomUserDetailsService.CustomUs
 import fr.sncf.ecommerce.users.application.api.controllers.responses.UserResponse;
 import fr.sncf.ecommerce.users.application.api.controllers.responses.UserResponseMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 
 @RestController
 @RequestMapping(path = "/auth/state")
