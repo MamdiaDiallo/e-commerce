@@ -9,6 +9,8 @@ import { AuthentificationService } from './authentication/service/authentificati
 import { WithCredentialsInterceptor } from './authentication/interceptors/with-credentials.interceptor';
 import { UserResponseMapper } from './users/service/user-response.mapper';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthInterceptor } from './authentication/interceptors/auth.interceptor';
+
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -19,7 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
   ],
   providers: [
-    [UserResponseMapper, AuthentificationService],
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+   /* [UserResponseMapper, AuthentificationService],
     {
       provide: APP_INITIALIZER,
       useFactory: (authservice: AuthentificationService) => () =>
@@ -32,7 +35,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       multi: true,
       useClass: WithCredentialsInterceptor,
     },
-  ],
+  */],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

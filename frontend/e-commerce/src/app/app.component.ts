@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   selector: 'app-root',
   template: `
     <div class="container">
-    <form [formGroup]="form" (ngSubmit)="authenticate()">
+    <form >
       <label>Email</label>
       <input type="text" placeholder="email" formControlName="email">
 
@@ -23,35 +23,35 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  
+
   form!: FormGroup
-  
+
   error!: Error
 
   constructor(private authentificationService: AuthentificationService,
-     private formBuilder: FormBuilder,
-     private router: Router) {
- 
-  }
+    private formBuilder: FormBuilder,
+    private router: Router) {
 
-  ngOnInit():void {
-    this.form = this.formBuilder.group({
-      email: this.formBuilder.control(''),
-      password: this.formBuilder.control('')
-    })
   }
-  authenticate(): void {
-    console.log("authenticate ",this.form.value)
-
-    const {email , password } = this.form.value
-    this.authentificationService.authenticate(email, password)
-    .subscribe({
-      next:() => {
-        this.router.navigateByUrl('login')
-      },
-      error: err => {
-        this.error = err
-      }
-    })
-  }
+  /*
+    ngOnInit(): void {
+      this.form = this.formBuilder.group({
+        email: this.formBuilder.control(''),
+        password: this.formBuilder.control('')
+      })
+    }/*
+    authenticate(): void {
+      console.log("authenticate ",this.form.value)
+  
+      const {email , password } = this.form.value
+      this.authentificationService.authenticate(email, password)
+      .subscribe({
+        next:() => {
+          this.router.navigateByUrl('login')
+        },
+        error: err => {
+          this.error = err
+        }
+      })
+    }*/
 }

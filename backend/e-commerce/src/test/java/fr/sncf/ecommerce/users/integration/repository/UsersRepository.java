@@ -1,16 +1,6 @@
 package fr.sncf.ecommerce.users.integration.repository;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import fr.sncf.ecommerce.common.infrastructure.persistence.JdbcUtils;
-import fr.sncf.ecommerce.users.domain.models.User;
 import lombok.RequiredArgsConstructor;
 
 @Repository

@@ -1,16 +1,6 @@
 package fr.sncf.ecommerce.users.integration.repository;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-import fr.sncf.ecommerce.users.domain.models.User;
-import fr.sncf.ecommerce.users.domain.models.UserRole;
-import fr.sncf.ecommerce.users.domain.models.params.CreateUserParams;
 
 @DataJdbcTest
 public class UsersRepositoryTest {
